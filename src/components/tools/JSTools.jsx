@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import { useAI } from '../contexts/AIContext';
+import { useAI } from '../../contexts/AIContext';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
 // Import all implemented tool components
-import ASCIIArtGenerator from '../components/tools/text/ASCIIArtGenerator';
-import StringCaseConverter from '../components/tools/text/StringCaseConverter';
-import StringInspector from '../components/tools/text/StringInspector';
-import LoremIpsumGenerator from '../components/tools/text/LoremIpsumGenerator';
-import TextDiff from '../components/tools/text/TextDiff';
-import HTMLToText from '../components/tools/text/HTMLToText';
-import MarkdownToHTML from '../components/tools/text/MarkdownToHTML';
-import HTMLToMarkdown from '../components/tools/text/HTMLToMarkdown';
+import ASCIIArtGenerator from './text/ASCIIArtGenerator';
+import StringCaseConverter from './text/StringCaseConverter';
+import StringInspector from './text/StringInspector';
+import LoremIpsumGenerator from './text/LoremIpsumGenerator';
+import TextDiff from './text/TextDiff';
+import HTMLToText from './text/HTMLToText';
+import MarkdownToHTML from './text/MarkdownToHTML';
+import HTMLToMarkdown from './text/HTMLToMarkdown';
 
-import Base64Tool from '../components/tools/encoding/Base64Tool';
-import Base58Tool from '../components/tools/encoding/Base58Tool';
-import URITool from '../components/tools/encoding/URITool';
-import HTMLEntitiesConverter from '../components/tools/encoding/HTMLEntitiesConverter';
-import URLParser from '../components/tools/encoding/URLParser';
-import QueryStringParser from '../components/tools/encoding/QueryStringParser';
+import Base64Tool from './encoding/Base64Tool';
+import Base58Tool from './encoding/Base58Tool';
+import URITool from './encoding/URITool';
+import HTMLEntitiesConverter from './encoding/HTMLEntitiesConverter';
+import URLParser from './encoding/URLParser';
+import QueryStringParser from './encoding/QueryStringParser';
 
-import JSONFormatter from '../components/tools/formatters/JSONFormatter';
+import JSONFormatter from './formatters/JSONFormatter';
 
-import PasswordGenerator from '../components/tools/generators/PasswordGenerator';
-import UUIDGenerator from '../components/tools/generators/UUIDGenerator';
+import PasswordGenerator from './generators/PasswordGenerator';
+import UUIDGenerator from './generators/UUIDGenerator';
 
 const { FiSearch } = FiIcons;
 
