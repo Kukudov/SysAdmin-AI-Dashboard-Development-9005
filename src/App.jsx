@@ -7,6 +7,7 @@ import { GoogleProvider } from './contexts/GoogleContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Analytics from './pages/Analytics';
 import UserManagement from './pages/UserManagement';
 import TaskManagement from './pages/TaskManagement';
 import AIAssistant from './pages/AIAssistant';
@@ -29,9 +30,17 @@ function App() {
               <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
                 <Routes>
                   <Route path="/login" element={<Login />} />
-                  <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <Layout />
+                      </ProtectedRoute>
+                    }
+                  >
                     <Route index element={<Navigate to="/dashboard" replace />} />
                     <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="analytics" element={<Analytics />} />
                     <Route path="users" element={<UserManagement />} />
                     <Route path="tasks" element={<TaskManagement />} />
                     <Route path="ai-assistant" element={<AIAssistant />} />

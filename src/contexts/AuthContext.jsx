@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUserProfile = async (userId) => {
     try {
       const { data, error } = await supabase
-        .from('users')
+        .from('users_sysadmin_2024')
         .select('*')
         .eq('id', userId)
         .single();
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
     if (data.user && !error) {
       // Create user profile
-      await supabase.from('users').insert([{
+      await supabase.from('users_sysadmin_2024').insert([{
         id: data.user.id,
         email: data.user.email,
         full_name: fullName,
@@ -92,17 +92,27 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (updates) => {
     try {
-      const { data, error } = await supabase
-        .from('users')
+      // Use update without select first, then fetch the updated data
+      const { error: updateError } = await supabase
+        .from('users_sysadmin_2024')
         .update(updates)
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      // Now fetch the updated profile
+      const { data, error: fetchError } = await supabase
+        .from('users_sysadmin_2024')
+        .select('*')
         .eq('id', user.id)
-        .select()
         .single();
 
-      if (error) throw error;
+      if (fetchError) throw fetchError;
+
       setProfile(data);
       return { data, error: null };
     } catch (error) {
+      console.error('Profile update error:', error);
       return { data: null, error };
     }
   };

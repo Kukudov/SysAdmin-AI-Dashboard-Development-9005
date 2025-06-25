@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import SafeIcon from '../common/SafeIcon';
+import SupabaseStatus from '../components/SupabaseStatus';
 import * as FiIcons from 'react-icons/fi';
 
 const { FiEye, FiEyeOff, FiSun, FiMoon } = FiIcons;
@@ -62,7 +63,7 @@ const Login = () => {
           >
             <SafeIcon icon={isDark ? FiSun : FiMoon} className="w-5 h-5" />
           </button>
-          
+
           <div className="mx-auto h-12 w-12 bg-primary-600 rounded-xl flex items-center justify-center">
             <span className="text-white font-bold text-xl">SA</span>
           </div>
@@ -73,6 +74,8 @@ const Login = () => {
             SysAdmin AI Ops Dashboard
           </p>
         </div>
+
+        <SupabaseStatus />
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
@@ -130,9 +133,9 @@ const Login = () => {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <SafeIcon 
-                    icon={showPassword ? FiEyeOff : FiEye} 
-                    className="h-5 w-5 text-gray-400" 
+                  <SafeIcon
+                    icon={showPassword ? FiEyeOff : FiEye}
+                    className="h-5 w-5 text-gray-400"
                   />
                 </button>
               </div>

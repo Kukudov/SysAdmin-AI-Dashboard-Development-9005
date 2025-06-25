@@ -73,10 +73,12 @@ const TaskManagement = () => {
     try {
       const { error } = await dbHelpers.updateTask(taskId, { status: newStatus });
       if (error) throw error;
-      
-      setTasks(prev => prev.map(task => 
-        task.id === taskId ? { ...task, status: newStatus } : task
-      ));
+
+      setTasks(prev =>
+        prev.map(task =>
+          task.id === taskId ? { ...task, status: newStatus } : task
+        )
+      );
     } catch (error) {
       console.error('Error updating task status:', error);
     }
@@ -84,6 +86,7 @@ const TaskManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const taskData = {
         ...formData,
@@ -98,21 +101,25 @@ const TaskManagement = () => {
         const { error } = await dbHelpers.createTask(taskData);
         if (error) throw error;
       }
-      
+
       await fetchTasks();
-      setShowModal(false);
-      setEditingTask(null);
-      setFormData({
-        title: '',
-        description: '',
-        assigned_to: '',
-        due_date: '',
-        priority: 'medium',
-        status: 'pending',
-      });
+      handleCloseModal();
     } catch (error) {
       console.error('Error saving task:', error);
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditingTask(null);
+    setFormData({
+      title: '',
+      description: '',
+      assigned_to: '',
+      due_date: '',
+      priority: 'medium',
+      status: 'pending',
+    });
   };
 
   const handleEdit = (task) => {
@@ -130,7 +137,7 @@ const TaskManagement = () => {
 
   const handleDelete = async (taskId) => {
     if (!confirm('Are you sure you want to delete this task?')) return;
-    
+
     try {
       const { error } = await dbHelpers.deleteTask(taskId);
       if (error) throw error;
@@ -189,11 +196,9 @@ const TaskManagement = () => {
                 </div>
               )}
             </div>
-            
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
               {task.description}
             </p>
-            
             <div className="flex items-center justify-between text-xs">
               <div className="flex items-center space-x-2">
                 {assignedUser && (
@@ -209,7 +214,6 @@ const TaskManagement = () => {
                   <span className="capitalize">{task.priority}</span>
                 </div>
               </div>
-              
               {task.due_date && (
                 <div className="flex items-center text-gray-500 dark:text-gray-400">
                   <SafeIcon icon={FiCalendar} className="w-3 h-3 mr-1" />
@@ -287,15 +291,16 @@ const TaskManagement = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setShowModal(false)}></div>
-            
+            <div 
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+              onClick={handleCloseModal}
+            ></div>
             <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <form onSubmit={handleSubmit}>
                 <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
                     {editingTask ? 'Edit Task' : 'Create New Task'}
                   </h3>
-                  
                   <div className="space-y-4">
                     <div>
                       <label className="form-label">Title</label>
@@ -303,71 +308,75 @@ const TaskManagement = () => {
                         type="text"
                         className="form-input"
                         value={formData.title}
-                        onChange={(e) => setFormData({...formData, title: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="form-label">Description</label>
                       <textarea
                         className="form-input"
                         rows="3"
                         value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="form-label">Assign To</label>
                       <select
                         className="form-input"
                         value={formData.assigned_to}
-                        onChange={(e) => setFormData({...formData, assigned_to: e.target.value})}
-                        disabled={!isManager}
+                        onChange={(e) => setFormData({ ...formData, assigned_to: e.target.value })}
                       >
-                        <option value="">Select User</option>
+                        <option value="">Select User (Optional)</option>
                         {users.map(user => (
                           <option key={user.id} value={user.id}>
                             {user.full_name} ({user.role})
                           </option>
                         ))}
                       </select>
+                      {!isManager && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          Only managers can assign tasks to other users
+                        </p>
+                      )}
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="form-label">Priority</label>
                         <select
                           className="form-input"
                           value={formData.priority}
-                          onChange={(e) => setFormData({...formData, priority: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                         >
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>
                           <option value="high">High</option>
                         </select>
                       </div>
-                      
+
                       <div>
                         <label className="form-label">Due Date</label>
                         <input
                           type="date"
                           className="form-input"
                           value={formData.due_date}
-                          onChange={(e) => setFormData({...formData, due_date: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
                         />
                       </div>
                     </div>
-                    
+
                     {editingTask && (
                       <div>
                         <label className="form-label">Status</label>
                         <select
                           className="form-input"
                           value={formData.status}
-                          onChange={(e) => setFormData({...formData, status: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                         >
                           <option value="pending">Pending</option>
                           <option value="in-progress">In Progress</option>
@@ -378,14 +387,17 @@ const TaskManagement = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button type="submit" className="btn-primary sm:ml-3">
+                  <button
+                    type="submit"
+                    className="btn-primary sm:ml-3"
+                  >
                     {editingTask ? 'Update' : 'Create'}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={handleCloseModal}
                     className="btn-secondary"
                   >
                     Cancel

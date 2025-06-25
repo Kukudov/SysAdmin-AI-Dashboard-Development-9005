@@ -1,35 +1,57 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+// Supabase configuration
+const supabaseUrl = 'https://zpxwdhsjupkmxzedphjf.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweHdkaHNqdXBrbXh6ZWRwaGpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4NTcxNTAsImV4cCI6MjA2NjQzMzE1MH0.ujaa3XtW2pI1ApOrVe-gv-OfGKqGqtGKGhbemgNKe6k';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create the Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+  },
+});
 
-// Database helper functions
+// Database helper functions with correct table names
 export const dbHelpers = {
   // Users
   async getUsers() {
     const { data, error } = await supabase
-      .from('users')
+      .from('users_sysadmin_2024')
       .select('*')
       .order('created_at', { ascending: false });
     return { data, error };
   },
 
   async updateUser(id, updates) {
-    const { data, error } = await supabase
-      .from('users')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-    return { data, error };
+    try {
+      // First update the user
+      const { error: updateError } = await supabase
+        .from('users_sysadmin_2024')
+        .update(updates)
+        .eq('id', id);
+
+      if (updateError) throw updateError;
+
+      // Then fetch the updated data
+      const { data, error: fetchError } = await supabase
+        .from('users_sysadmin_2024')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      return { data, error: null };
+    } catch (error) {
+      return { data: null, error };
+    }
   },
 
   // Tasks
   async getTasks() {
     const { data, error } = await supabase
-      .from('tasks')
+      .from('tasks_sysadmin_2024')
       .select(`
         *,
         assigned_user:assigned_to(id, full_name, email),
@@ -41,7 +63,7 @@ export const dbHelpers = {
 
   async createTask(task) {
     const { data, error } = await supabase
-      .from('tasks')
+      .from('tasks_sysadmin_2024')
       .insert([task])
       .select()
       .single();
@@ -49,18 +71,31 @@ export const dbHelpers = {
   },
 
   async updateTask(id, updates) {
-    const { data, error } = await supabase
-      .from('tasks')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-    return { data, error };
+    try {
+      const { error: updateError } = await supabase
+        .from('tasks_sysadmin_2024')
+        .update(updates)
+        .eq('id', id);
+
+      if (updateError) throw updateError;
+
+      const { data, error: fetchError } = await supabase
+        .from('tasks_sysadmin_2024')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      return { data, error: null };
+    } catch (error) {
+      return { data: null, error };
+    }
   },
 
   async deleteTask(id) {
     const { error } = await supabase
-      .from('tasks')
+      .from('tasks_sysadmin_2024')
       .delete()
       .eq('id', id);
     return { error };
@@ -69,7 +104,7 @@ export const dbHelpers = {
   // Backups
   async getBackups() {
     const { data, error } = await supabase
-      .from('backups')
+      .from('backups_sysadmin_2024')
       .select('*')
       .order('timestamp', { ascending: false });
     return { data, error };
@@ -77,7 +112,7 @@ export const dbHelpers = {
 
   async createBackup(backup) {
     const { data, error } = await supabase
-      .from('backups')
+      .from('backups_sysadmin_2024')
       .insert([backup])
       .select()
       .single();
@@ -87,7 +122,7 @@ export const dbHelpers = {
   // Vulnerabilities
   async getVulnerabilities() {
     const { data, error } = await supabase
-      .from('vulnerabilities')
+      .from('vulnerabilities_sysadmin_2024')
       .select('*')
       .order('created_at', { ascending: false });
     return { data, error };
@@ -95,7 +130,7 @@ export const dbHelpers = {
 
   async createVulnerability(vulnerability) {
     const { data, error } = await supabase
-      .from('vulnerabilities')
+      .from('vulnerabilities_sysadmin_2024')
       .insert([vulnerability])
       .select()
       .single();
@@ -103,13 +138,26 @@ export const dbHelpers = {
   },
 
   async updateVulnerability(id, updates) {
-    const { data, error } = await supabase
-      .from('vulnerabilities')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-    return { data, error };
+    try {
+      const { error: updateError } = await supabase
+        .from('vulnerabilities_sysadmin_2024')
+        .update(updates)
+        .eq('id', id);
+
+      if (updateError) throw updateError;
+
+      const { data, error: fetchError } = await supabase
+        .from('vulnerabilities_sysadmin_2024')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      return { data, error: null };
+    } catch (error) {
+      return { data: null, error };
+    }
   },
 
   // File uploads

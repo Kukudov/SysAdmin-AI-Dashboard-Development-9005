@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { dbHelpers } from '../lib/supabase';
 import SafeIcon from '../common/SafeIcon';
+import SupabaseStatus from '../components/SupabaseStatus';
 import * as FiIcons from 'react-icons/fi';
 
-const { 
-  FiUsers, FiCheckSquare, FiHardDrive, FiShield, 
-  FiTrendingUp, FiAlertTriangle, FiCheckCircle, FiClock 
-} = FiIcons;
+const { FiUsers, FiCheckSquare, FiHardDrive, FiShield, FiTrendingUp, FiAlertTriangle, FiCheckCircle, FiClock } = FiIcons;
 
 const Dashboard = () => {
   const { profile } = useAuth();
@@ -146,6 +144,8 @@ const Dashboard = () => {
           Welcome back, {profile?.full_name}
         </p>
       </div>
+
+      <SupabaseStatus />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

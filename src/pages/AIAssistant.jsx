@@ -3,7 +3,7 @@ import { useAI } from '../contexts/AIContext';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiSend, FiMic, FiMicOff, FiDownload, FiTrash2, FiSettings } = FiIcons;
+const { FiSend, FiMic, FiMicOff, FiDownload, FiTrash2, FiSettings, FiX } = FiIcons;
 
 const AIAssistant = () => {
   const {
@@ -86,6 +86,14 @@ const AIAssistant = () => {
     setShowApiKeyModal(false);
   };
 
+  const handleCloseModal = () => {
+    if (hasApiKey) {
+      setShowApiKeyModal(false);
+      setTempApiKey(apiKey); // Reset to current API key
+    }
+    // If no API key, don't allow closing the modal
+  };
+
   const formatMessage = (content) => {
     return content.split('\n').map((line, index) => (
       <span key={index}>
@@ -161,14 +169,17 @@ const AIAssistant = () => {
                 chatHistory.map((msg) => (
                   <div
                     key={msg.id}
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${
+                      msg.role === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
                   >
                     <div
                       className={`
                         max-w-3xl p-3 rounded-lg
-                        ${msg.role === 'user'
-                          ? 'bg-primary-600 text-white'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                        ${
+                          msg.role === 'user'
+                            ? 'bg-primary-600 text-white'
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                         }
                       `}
                     >
@@ -220,9 +231,10 @@ const AIAssistant = () => {
                     onClick={handleVoiceInput}
                     className={`
                       absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded
-                      ${isListening 
-                        ? 'text-red-600 bg-red-100' 
-                        : 'text-gray-400 hover:text-gray-600'
+                      ${
+                        isListening
+                          ? 'text-red-600 bg-red-100'
+                          : 'text-gray-400 hover:text-gray-600'
                       }
                     `}
                   >
@@ -247,13 +259,21 @@ const AIAssistant = () => {
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-            
             <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
-                  OpenRouter API Configuration
-                </h3>
-                
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                    OpenRouter API Configuration
+                  </h3>
+                  {hasApiKey && (
+                    <button
+                      onClick={handleCloseModal}
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    >
+                      <SafeIcon icon={FiX} className="w-5 h-5" />
+                    </button>
+                  )}
+                </div>
                 <div className="space-y-4">
                   <div>
                     <label className="form-label">API Key</label>
@@ -278,7 +298,6 @@ const AIAssistant = () => {
                   </div>
                 </div>
               </div>
-              
               <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   onClick={handleSaveApiKey}
@@ -289,7 +308,7 @@ const AIAssistant = () => {
                 </button>
                 {hasApiKey && (
                   <button
-                    onClick={() => setShowApiKeyModal(false)}
+                    onClick={handleCloseModal}
                     className="btn-secondary"
                   >
                     Cancel
