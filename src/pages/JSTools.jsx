@@ -8,6 +8,10 @@ import ASCIIArtGenerator from '../components/tools/text/ASCIIArtGenerator';
 import StringCaseConverter from '../components/tools/text/StringCaseConverter';
 import Base64Tool from '../components/tools/encoding/Base64Tool';
 import Base58Tool from '../components/tools/encoding/Base58Tool';
+import URITool from '../components/tools/encoding/URITool';
+import HTMLEntitiesConverter from '../components/tools/encoding/HTMLEntitiesConverter';
+import URLParser from '../components/tools/encoding/URLParser';
+import QueryStringParser from '../components/tools/encoding/QueryStringParser';
 import JSONFormatter from '../components/tools/formatters/JSONFormatter';
 import PasswordGenerator from '../components/tools/generators/PasswordGenerator';
 import UUIDGenerator from '../components/tools/generators/UUIDGenerator';
@@ -15,48 +19,218 @@ import UUIDGenerator from '../components/tools/generators/UUIDGenerator';
 const { FiSearch } = FiIcons;
 
 // Placeholder components for tools not yet implemented
-function StringInspector() { return <div>String Inspector - Coming Soon</div>; }
-function LoremIpsumGenerator() { return <div>Lorem Ipsum Generator - Coming Soon</div>; }
-function TextDiff() { return <div>Text Diff - Coming Soon</div>; }
-function HTMLToText() { return <div>HTML To Text - Coming Soon</div>; }
-function MarkdownToHTML() { return <div>Markdown To HTML - Coming Soon</div>; }
-function HTMLToMarkdown() { return <div>HTML To Markdown - Coming Soon</div>; }
-function URITool() { return <div>URI Encoder/Decoder - Coming Soon</div>; }
-function HTMLEntitiesConverter() { return <div>HTML Entities Encoder/Decoder - Coming Soon</div>; }
-function URLParser() { return <div>URL Parser - Coming Soon</div>; }
-function QueryStringParser() { return <div>QueryString Parser - Coming Soon</div>; }
-function JSONViewer() { return <div>JSON Viewer - Coming Soon</div>; }
-function JSONExplorer() { return <div>JSON Explorer - Coming Soon</div>; }
-function XMLFormatter() { return <div>XML Formatter - Coming Soon</div>; }
-function YAMLFormatter() { return <div>YAML Formatter - Coming Soon</div>; }
-function CSSFormatter() { return <div>CSS Formatter - Coming Soon</div>; }
-function HTMLFormatter() { return <div>HTML Formatter - Coming Soon</div>; }
-function SQLFormatter() { return <div>SQL Formatter - Coming Soon</div>; }
-function ULIDGenerator() { return <div>ULID Generator - Coming Soon</div>; }
-function QRCodeGenerator() { return <div>QR Code Generator - Coming Soon</div>; }
-function HashGenerator() { return <div>Hash Generator - Coming Soon</div>; }
-function HMACGenerator() { return <div>HMAC Generator - Coming Soon</div>; }
-function JWTDecoder() { return <div>JWT Decoder - Coming Soon</div>; }
-function BCryptTool() { return <div>BCrypt - Coming Soon</div>; }
-function BIP39Generator() { return <div>BIP39 Passphrase Generator - Coming Soon</div>; }
-function PGPKeyGenerator() { return <div>PGP Key Generator - Coming Soon</div>; }
-function RSAKeyGenerator() { return <div>RSA Key Pair Generator - Coming Soon</div>; }
-function DataEncryptor() { return <div>Data Encryptor - Coming Soon</div>; }
-function BasicAuthGenerator() { return <div>Basic Auth Generator - Coming Soon</div>; }
-function RegexTester() { return <div>RegExp Tester - Coming Soon</div>; }
-function CronParser() { return <div>CRON Parser - Coming Soon</div>; }
-function UnixTimeConverter() { return <div>Unix Time Converter - Coming Soon</div>; }
-function UnitConverter() { return <div>Unit Converter - Coming Soon</div>; }
-function NumberBaseConverter() { return <div>Number Base Converter - Coming Soon</div>; }
-function ChmodCalculator() { return <div>Chmod Calculator - Coming Soon</div>; }
-function KeycodeInfo() { return <div>Keycode Info - Coming Soon</div>; }
-function ColorPaletteGenerator() { return <div>Color Palette Generator - Coming Soon</div>; }
-function ColorContrastCalculator() { return <div>Color Contrast Calculator - Coming Soon</div>; }
-function CSSShadowGenerator() { return <div>CSS Shadow Generator - Coming Soon</div>; }
-function CSSTriangleGenerator() { return <div>CSS Triangle Generator - Coming Soon</div>; }
-function FaviconGenerator() { return <div>Favicon Generator - Coming Soon</div>; }
-function PlaceholderImageGenerator() { return <div>Placeholder Image Generator - Coming Soon</div>; }
-function DataURLGenerator() { return <div>Data URL Generator - Coming Soon</div>; }
+function StringInspector() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">String Inspector</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          This tool will provide detailed analysis of string properties, character counts, encoding detection, and more.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function LoremIpsumGenerator() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Lorem Ipsum Generator</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Generate placeholder text in various formats and lengths.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function TextDiff() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Text Diff</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Compare two text blocks and highlight differences.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function HTMLToText() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">HTML To Text</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Convert HTML content to plain text while preserving structure.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function MarkdownToHTML() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Markdown To HTML</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Convert Markdown syntax to HTML markup.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function HTMLToMarkdown() {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">HTML To Markdown</h3>
+      <p className="text-gray-600 dark:text-gray-400">Coming Soon</p>
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Convert HTML markup to Markdown syntax.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Additional placeholder components
+function JSONViewer() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">JSON Viewer</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function JSONExplorer() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">JSON Explorer</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function XMLFormatter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">XML Formatter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function YAMLFormatter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">YAML Formatter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function CSSFormatter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">CSS Formatter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function HTMLFormatter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">HTML Formatter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function SQLFormatter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">SQL Formatter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function ULIDGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">ULID Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function QRCodeGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">QR Code Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function HashGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Hash Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function HMACGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">HMAC Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function JWTDecoder() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">JWT Decoder</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function BCryptTool() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">BCrypt</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function BIP39Generator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">BIP39 Passphrase Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function PGPKeyGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">PGP Key Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function RSAKeyGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">RSA Key Pair Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function DataEncryptor() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Data Encryptor</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function BasicAuthGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Basic Auth Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function RegexTester() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">RegExp Tester</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function CronParser() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">CRON Parser</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function UnixTimeConverter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Unix Time Converter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function UnitConverter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Unit Converter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function NumberBaseConverter() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Number Base Converter</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function ChmodCalculator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Chmod Calculator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function KeycodeInfo() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Keycode Info</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function ColorPaletteGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Color Palette Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function ColorContrastCalculator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Color Contrast Calculator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function CSSShadowGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">CSS Shadow Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function CSSTriangleGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">CSS Triangle Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function FaviconGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Favicon Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function PlaceholderImageGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Placeholder Image Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
+
+function DataURLGenerator() {
+  return <div className="text-center py-12"><h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Data URL Generator</h3><p className="text-gray-600 dark:text-gray-400">Coming Soon</p></div>;
+}
 
 const JSTools = () => {
   const { hasApiKey, generateScript } = useAI();
@@ -157,6 +331,7 @@ const JSTools = () => {
     const filteredCategoryTools = Object.entries(category.tools).filter(([toolId, tool]) =>
       tool.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     if (filteredCategoryTools.length > 0) {
       acc[categoryId] = {
         ...category,
@@ -212,6 +387,7 @@ const JSTools = () => {
                       {Object.keys(category.tools).length} tools
                     </div>
                   </button>
+
                   {activeCategory === categoryId && (
                     <div className="ml-4 mt-2 space-y-1">
                       {Object.entries(category.tools).map(([toolId, tool]) => (
