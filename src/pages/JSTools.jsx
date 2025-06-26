@@ -570,17 +570,23 @@ const JSTools = () => {
     }
   };
 
-  // Filter tools based on search
+  // Filter tools based on search - FIXED: Don't filter out categories without search
   const filteredTools = Object.entries(toolCategories).reduce((acc, [categoryId, category]) => {
-    const filteredCategoryTools = Object.entries(category.tools).filter(([toolId, tool]) =>
-      tool.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (searchTerm.trim() === '') {
+      // If no search term, show all categories
+      acc[categoryId] = category;
+    } else {
+      // If search term exists, filter tools within categories
+      const filteredCategoryTools = Object.entries(category.tools).filter(([toolId, tool]) =>
+        tool.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
-    if (filteredCategoryTools.length > 0) {
-      acc[categoryId] = {
-        ...category,
-        tools: Object.fromEntries(filteredCategoryTools)
-      };
+      if (filteredCategoryTools.length > 0) {
+        acc[categoryId] = {
+          ...category,
+          tools: Object.fromEntries(filteredCategoryTools)
+        };
+      }
     }
     return acc;
   }, {});
